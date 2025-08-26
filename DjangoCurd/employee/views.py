@@ -14,5 +14,6 @@ def create_employee(request):
             form = EmployeeForm()
         return render(request, 'create.html', {'form' : form})
     
+
 def delete_employee(request):
     
