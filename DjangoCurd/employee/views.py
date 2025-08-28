@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import EmployeeForm
 from django.shortcuts import redirect
+from .models import Employee
+
+
 # Create your views here.
 def create_employee(request):
     if request.method == 'POST':
@@ -13,7 +16,36 @@ def create_employee(request):
         else:
             form = EmployeeForm()
         return render(request, 'create.html', {'form' : form})
-    
+
+
+# list view
+
+def employee_list(request):
+    employee = Employee.object.all()
+    return render(request,'list.html',{'employee':employee})
+
+
+# update view
+
+def update_employee(request):
+    employee = Employee.object.get(id=pk)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=employee)
+
+        if form.is_valid():
+            form.save()
+            return redirect('list')
+        else:
+            form = EmployeeForm(instance=employee)
+        return render(request , 'update.html',{'form':form})
+
+# delete view
 
 def delete_employee(request):
+    employee = Employee.object.get(id=pk)
+    if request.method == 'POST':
+        employee.delete()
+    return redirect('list')
+
+
     
