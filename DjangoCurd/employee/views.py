@@ -13,9 +13,9 @@ def create_employee(request):
         if form.is_valid():
             form.save()
             return redirect('list')
-        else:
-            form = EmployeeForm()
-        return render(request, 'create.html', {'form' : form})
+    else:
+        form = EmployeeForm()
+    return render(request, 'create.html', {'form' : form})
 
 
 # list view
